@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Birthday My Love</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-deep: #0c0215;
+      --bg-card: rgba(19, 5, 34, 0.82);
+      --accent-pink: #ff7bb9;
+      --accent-pink-soft: #ffb6d9;
+      --accent-purple: #b088ff;
+      --accent-gold: #ffd28a;
+      --text-main: #ffeefb;
+      --text-soft: #fbdcf5;
+      --border-soft: rgba(255, 255, 255, 0.15);
+      --shadow-soft: 0 24px 60px rgba(0, 0, 0, 0.75);
+      --radius-card: 26px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text-main);
+      background: radial-gradient(circle at top left, #3b0b4f, transparent 60%),
+                  radial-gradient(circle at bottom right, #ff88c2, transparent 60%),
+                  linear-gradient(135deg, #0a0013 0%, #1a0328 50%, #3a0b54 100%);
+      background-size: 200% 200%;
+      animation: bgShift 20s ease-in-out infinite alternate;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Intro / celebration screen */
+
+    .intro-screen {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: radial-gradient(circle at top, #3b0b4f, #0a0013 55%, #070010 100%);
+      z-index: 999;
+      overflow: hidden;
+    }
+
+    #confetti-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .intro-overlay {
+      position: absolute;
+      inset: -20%;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(255, 170, 221, 0.25), transparent 55%),
+        radial-gradient(circle at 90% 100%, rgba(176, 122, 255, 0.3), transparent 55%);
+      mix-blend-mode: screen;
+      filter: blur(8px);
+      opacity: 0.9;
+    }
+
+    .intro-content {
+      position: relative;
+      z-index: 1;
+      max-width: 640px;
+      padding: 2.5rem 1.75rem 2rem;
+      border-radius: 28px;
+      background: radial-gradient(circle at top left, rgba(255, 171, 224, 0.18), transparent 55%),
+                  rgba(11, 1, 22, 0.85);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(22px);
+    }
+
+    .intro-subtitle {
+      font-size: 0.9rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255, 228, 255, 0.8);
+      margin-bottom: 0.85rem;
+    }
+
+    .intro-content h1 {
+      font-family: "Great Vibes", cursive;
+      font-size: clamp(3rem, 7vw, 4.3rem);
+      line-height: 1.1;
+      background: linear-gradient(120deg, #ffe5f6, #ffd28a, #ff8ccf);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 22px rgba(255, 182, 232, 0.7);
+      margin-bottom: 1.75rem;
+    }
+
+    .intro-line {
+      font-size: 1rem;
+      color: rgba(255, 233, 250, 0.92);
+      max-width: 28rem;
+      margin: 0 auto 0.75rem;
+    }
+
+    .intro-line + .intro-line {
+      opacity: 0.85;
+      font-size: 0.95rem;
+    }
+
+    .begin-btn {
+      margin-top: 2.25rem;
+      padding: 0.9rem 2.9rem;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #1a051f;
+      background-image: linear-gradient(135deg, #ffd2f4, #ffd28a, #ff8bd0);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.85),
+                  0 0 40px rgba(255, 185, 230, 0.6);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease, opacity 0.7s ease, visibility 0.7s ease;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(18px) scale(0.98);
+    }
+
+    .begin-btn:hover {
+      transform: translateY(-2px) scale(1.02);
+      filter: brightness(1.05);
+      box-shadow: 0 22px 50px rgba(0, 0, 0, 0.95),
+                  0 0 60px rgba(255, 193, 229, 0.9);
+    }
+
+    .begin-btn:active {
+      transform: translateY(1px) scale(0.98);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.8);
+    }
+
+    .tap-hint {
+      margin-top: 1.1rem;
+      font-size: 0.83rem;
+      color: rgba(255, 230, 250, 0.8);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(12px);
+      transition: opacity 0.7s ease 0.15s, transform 0.7s ease 0.15s, visibility 0.7s ease 0.15s;
+    }
+
+    .intro-screen.show-button .begin-btn {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+      animation: pulse 2.2s ease-in-out infinite;
+    }
+
+    .intro-screen.show-button .tap-hint {
+      opacity: 0.9;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .intro-screen.fade-out {
+      animation: fadeOut 0.9s ease forwards;
+    }
+
+    /* Background decor */
+
+    .background-decor {
+      position: fixed;
+      inset: -10%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .glow {
+      position: absolute;
+      width: 42vw;
+      height: 42vw;
+      border-radius: 50%;
+      filter: blur(22px);
+      opacity: 0.5;
+      mix-blend-mode: screen;
+      animation: floatGlow 24s ease-in-out infinite alternate;
+    }
+
+    .glow-1 {
+      top: -12%;
+      left: -10%;
+      background: radial-gradient(circle at 30% 30%, rgba(255, 194, 248, 0.8), transparent 65%);
+      animation-delay: -6s;
+    }
+
+    .glow-2 {
+      bottom: -18%;
+      right: -12%;
+      background: radial-gradient(circle at 70% 60%, rgba(176, 122, 255, 0.9), transparent 65%);
+      animation-duration: 28s;
+    }
+
+    .glow-3 {
+      top: 20%;
+      right: 5%;
+      width: 26vw;
+      height: 26vw;
+      background: radial-gradient(circle at 50% 50%, rgba(255, 212, 138, 0.85), transparent 60%);
+      opacity: 0.35;
+      animation-duration: 30s;
+      animation-delay: -10s;
+    }
+
+    .floating-hearts {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .floating-hearts span {
+      position: absolute;
+      bottom: -12%;
+      width: 24px;
+      height: 24px;
+      background: linear-gradient(145deg, #ff9ac4, #ff4b91);
+      transform: rotate(45deg);
+      opacity: 0.7;
+      animation: floatHeart 16s linear infinite;
+      animation-delay: calc(-1s * var(--i));
+      animation-duration: calc(13s + (var(--i) * 0.35s));
+      left: calc(4.5% * var(--i));
+    }
+
+    .floating-hearts span::before,
+    .floating-hearts span::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: inherit;
+      border-radius: 50%;
+    }
+
+    .floating-hearts span::before {
+      top: -50%;
+    }
+
+    .floating-hearts span::after {
+      left: -50%;
+    }
+
+    /* Page wrapper & header */
+
+    .page-wrapper {
+      position: relative;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 4.75rem 1.5rem 3.25rem;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(18px);
+      pointer-events: none;
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .page-wrapper.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      background: linear-gradient(135deg, rgba(34, 8, 58, 0.9), rgba(77, 22, 108, 0.9));
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 999px;
+      padding: 0.7rem 1.4rem;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(18px);
+      margin-bottom: 2.75rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      white-space: nowrap;
+    }
+
+    .brand-mark {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #ffe6ff, #ff4b91);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      box-shadow: 0 0 18px rgba(255, 155, 210, 0.9);
+    }
+
+    .brand-text {
+      font-weight: 500;
+      font-size: 0.92rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255, 235, 255, 0.9);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.4rem;
+      font-size: 0.9rem;
+      color: rgba(255, 228, 255, 0.8);
+    }
+
+    .nav-links a {
+      position: relative;
+      padding-bottom: 0.1rem;
+      white-space: nowrap;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -0.15rem;
+      width: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #ffd2f4, #ff8bd0);
+      transition: width 0.2s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* Sections */
+
+    .section {
+      margin-bottom: clamp(3.1rem, 6vw, 4.8rem);
+    }
+
+    .section-heading {
+      margin-bottom: 1.9rem;
+      text-align: center;
+    }
+
+    .section-eyebrow {
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255, 222, 255, 0.7);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-family: "Great Vibes", cursive;
+      font-size: clamp(2.2rem, 5vw, 2.9rem);
+      background: linear-gradient(120deg, #ffeefb, #ffd28a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 25px rgba(255, 185, 229, 0.6);
+      margin-bottom: 0.4rem;
+    }
+
+    .section-subtitle {
+      font-size: 0.98rem;
+      color: rgba(255, 233, 251, 0.85);
+      max-width: 32rem;
+      margin: 0.35rem auto 0;
+    }
+
+    /* Hero */
+
+    .hero-section {
+      text-align: center;
+      padding: 2.4rem 0 3.1rem;
+    }
+
+    .hero-main-title {
+      font-family: "Great Vibes", cursive;
+      font-size: clamp(3.2rem, 8vw, 4.6rem);
+      line-height: 1.05;
+      margin-bottom: 0.9rem;
+      background: linear-gradient(120deg, #ffeefb, #ffd28a, #ff8ccf, #ffb6d9);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 26px rgba(255, 187, 230, 0.7);
+      animation: heroTitle 6.8s ease-in-out infinite alternate;
+    }
+
+    .hero-tagline {
+      font-size: 1.02rem;
+      color: rgba(255, 236, 252, 0.92);
+      max-width: 32rem;
+      margin: 0 auto 1.9rem;
+    }
+
+    .hero-tagline span {
+      color: #ffd7ff;
+      font-weight: 500;
+    }
+
+    .hero-meta {
+      font-size: 0.9rem;
+      color: rgba(255, 226, 253, 0.8);
+      display: inline-flex;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.17);
+      background: radial-gradient(circle at top left, rgba(255, 201, 241, 0.2), transparent 60%),
+                  rgba(15, 3, 30, 0.82);
+    }
+
+    .scroll-indicator {
+      margin-top: 2.3rem;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.85rem;
+      color: rgba(255, 225, 249, 0.8);
+      text-decoration: none;
+      opacity: 0.9;
+    }
+
+    .scroll-indicator-icon {
+      width: 24px;
+      height: 38px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 216, 246, 0.65);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .scroll-indicator-icon span {
+      width: 4px;
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #ffd2f4, #ff8ccf);
+      animation: scrollDot 1.8s ease-in-out infinite;
+    }
+
+    /* Love letter */
+
+    .love-letter-card {
+      max-width: 850px;
+      margin: 0 auto;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(255, 182, 226, 0.14), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(176, 122, 255, 0.13), transparent 55%),
+        var(--bg-card);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      padding: 2.6rem 1.9rem 2.4rem;
+      backdrop-filter: blur(22px);
+    }
+
+    .letter-intro {
+      font-family: "Great Vibes", cursive;
+      font-size: 1.85rem;
+      color: #ffeefb;
+      margin-bottom: 1rem;
+    }
+
+    .letter-body {
+      font-size: 0.98rem;
+      line-height: 1.9;
+      color: rgba(255, 235, 252, 0.94);
+    }
+
+    .letter-body p + p {
+      margin-top: 0.95rem;
+    }
+
+    .letter-highlight {
+      font-weight: 500;
+      color: var(--accent-pink-soft);
+    }
+
+    .letter-signoff {
+      margin-top: 1.8rem;
+      font-style: italic;
+      color: rgba(255, 223, 250, 0.96);
+    }
+
+    .letter-signature {
+      margin-top: 0.3rem;
+      font-family: "Great Vibes", cursive;
+      font-size: 1.7rem;
+      color: #ffd7ff;
+    }
+
+    /* Gallery */
+
+    .gallery-card {
+      max-width: 980px;
+      margin: 0 auto;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(255, 222, 252, 0.12), transparent 55%),
+        rgba(17, 4, 30, 0.88);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      padding: 2.4rem 1.8rem 2.1rem;
+      backdrop-filter: blur(20px);
+    }
+
+    .slideshow {
+      position: relative;
+      border-radius: 22px;
+      overflow: hidden;
+      aspect-ratio: 4 / 3;
+      margin-bottom: 1.7rem;
+      background: radial-gradient(circle at 10% 0%, #ffbadc, #4a105f);
+    }
+
+    .slideshow-frames {
+      position: absolute;
+      inset: 0;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transform: scale(1.03);
+      transition: opacity 1.3s ease, transform 1.3s ease;
+    }
+
+    .slide.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(1.12) contrast(1.02);
+    }
+
+    .slideshow-overlay-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(140deg, rgba(5, 0, 15, 0.2), rgba(5, 0, 15, 0.65));
+      mix-blend-mode: multiply;
+      pointer-events: none;
+    }
+
+    .slideshow-caption {
+      position: absolute;
+      left: 1.2rem;
+      bottom: 0.95rem;
+      padding: 0.65rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.83rem;
+      color: rgba(255, 238, 253, 0.92);
+      background: radial-gradient(circle at 0 0, rgba(255, 201, 241, 0.9), rgba(59, 12, 85, 0.95));
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.8);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .slideshow-caption span {
+      font-size: 0.9rem;
+    }
+
+    .slideshow-dots {
+      position: absolute;
+      right: 1.1rem;
+      bottom: 0.9rem;
+      display: flex;
+      gap: 0.4rem;
+    }
+
+    .slideshow-dots button {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      border: none;
+      padding: 0;
+      background: rgba(255, 228, 249, 0.55);
+      cursor: pointer;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+
+    .slideshow-dots button.active {
+      width: 18px;
+      background: linear-gradient(90deg, #ffd2f4, #ff8bd0);
+      transform: translateY(-1px);
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.65rem;
+    }
+
+    .photo-grid img {
+      border-radius: 16px;
+      height: 110px;
+      object-fit: cover;
+      filter: saturate(1.1);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.65);
+    }
+
+    .photo-grid img:nth-child(1),
+    .photo-grid img:nth-child(4) {
+      height: 140px;
+    }
+
+    .photo-grid img:hover {
+      transform: translateY(-4px) scale(1.03);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.9);
+      filter: saturate(1.15) brightness(1.02);
+    }
+
+    /* Memories */
+
+    .memories-card {
+      max-width: 980px;
+      margin: 0 auto;
+      background:
+        radial-gradient(circle at 100% 0, rgba(176, 122, 255, 0.2), transparent 60%),
+        rgba(16, 3, 33, 0.9);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      padding: 2.4rem 1.8rem 2.2rem;
+      backdrop-filter: blur(20px);
+    }
+
+    .memory-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1.3rem;
+    }
+
+    .memory-card {
+      position: relative;
+      border-radius: 20px;
+      padding: 1.45rem 1.2rem 1.3rem;
+      background: radial-gradient(circle at top left, rgba(255, 191, 234, 0.14), transparent 60%),
+                  rgba(27, 6, 48, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: 0 16px 30px rgba(0, 0, 0, 0.72);
+      overflow: hidden;
+    }
+
+    .memory-tag {
+      font-size: 0.77rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255, 227, 252, 0.7);
+      margin-bottom: 0.55rem;
+    }
+
+    .memory-title {
+      font-weight: 600;
+      color: #ffeefb;
+      font-size: 0.99rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .memory-text {
+      font-size: 0.9rem;
+      color: rgba(255, 223, 249, 0.86);
+      line-height: 1.6;
+    }
+
+    .memory-quote-mark {
+      position: absolute;
+      font-family: "Great Vibes", cursive;
+      font-size: 3.4rem;
+      color: rgba(255, 194, 238, 0.12);
+      right: 0.7rem;
+      bottom: -0.7rem;
+      pointer-events: none;
+    }
+
+    /* Wishes / videos */
+
+    .wishes-card {
+      max-width: 980px;
+      margin: 0 auto;
+      background:
+        radial-gradient(circle at 0 100%, rgba(255, 184, 220, 0.18), transparent 60%),
+        rgba(19, 4, 36, 0.9);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      padding: 2.4rem 1.8rem 2.2rem;
+      backdrop-filter: blur(20px);
+    }
+
+    .wishes-intro {
+      font-size: 0.9rem;
+      color: rgba(255, 231, 252, 0.9);
+      margin-bottom: 1.4rem;
+      text-align: center;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.4rem;
+    }
+
+    .video-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      border-radius: 18px;
+      padding: 0.85rem 0.85rem 0.95rem;
+      background: radial-gradient(circle at top left, rgba(255, 194, 245, 0.18), transparent 60%),
+                  rgba(27, 6, 48, 0.96);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.8);
+    }
+
+    .video-label {
+      font-size: 0.83rem;
+      color: rgba(255, 225, 251, 0.95);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .video-label span {
+      font-size: 1.05rem;
+    }
+
+    .video-card video,
+    .video-card iframe {
+      width: 100%;
+      border-radius: 12px;
+      background: #000;
+      border: none;
+      min-height: 150px;
+    }
+
+    /* Final section */
+
+    .final-card {
+      max-width: 840px;
+      margin: 0 auto;
+      text-align: center;
+      background:
+        radial-gradient(circle at 50% 0, rgba(255, 200, 243, 0.24), transparent 60%),
+        rgba(15, 2, 31, 0.96);
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 26px 70px rgba(0, 0, 0, 0.9);
+      padding: 2.7rem 1.9rem 2.6rem;
+      backdrop-filter: blur(26px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .final-title {
+      font-family: "Great Vibes", cursive;
+      font-size: clamp(2.3rem, 5.4vw, 3.1rem);
+      background: linear-gradient(120deg, #ffeefb, #ffd28a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.9rem;
+    }
+
+    .final-text {
+      font-size: 0.98rem;
+      color: rgba(255, 236, 253, 0.95);
+      max-width: 36rem;
+      margin: 0 auto 0.8rem;
+      line-height: 1.8;
+    }
+
+    .final-text-em {
+      color: var(--accent-pink-soft);
+      font-weight: 500;
+    }
+
+    .final-quote {
+      margin-top: 1.4rem;
+      font-size: 1.02rem;
+      color: #ffe4fb;
+      font-weight: 500;
+    }
+
+    .final-hearts {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .final-hearts span {
+      display: inline-block;
+      font-size: 1.6rem;
+      color: #ff99cc;
+      text-shadow: 0 0 18px rgba(255, 150, 206, 0.8);
+      animation: finalHearts 1.7s ease-in-out infinite alternate;
+    }
+
+    .final-hearts span:nth-child(2) {
+      animation-delay: 0.25s;
+      color: #ffd2f4;
+    }
+
+    .final-hearts span:nth-child(3) {
+      animation-delay: 0.5s;
+    }
+
+    .final-hearts span:nth-child(4) {
+      animation-delay: 0.75s;
+      color: #ffd28a;
+    }
+
+    .final-hearts span:nth-child(5) {
+      animation-delay: 1s;
+    }
+
+    .final-soft-glow {
+      position: absolute;
+      inset: 8%;
+      border-radius: inherit;
+      background: radial-gradient(circle at 50% 0, rgba(255, 207, 244, 0.2), transparent 65%);
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+
+    footer {
+      margin-top: 2.5rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: rgba(255, 224, 249, 0.7);
+    }
+
+    /* Reveal on scroll */
+
+    .reveal-on-scroll {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+
+    .reveal-on-scroll.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .delay-1 {
+      transition-delay: 0.08s;
+    }
+
+    .delay-2 {
+      transition-delay: 0.16s;
+    }
+
+    .delay-3 {
+      transition-delay: 0.24s;
+    }
+
+    /* Animations & keyframes */
+
+    @keyframes bgShift {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.85),
+                    0 0 40px rgba(255, 185, 230, 0.6);
+        transform: translateY(0) scale(1);
+      }
+      50% {
+        box-shadow: 0 26px 70px rgba(0, 0, 0, 0.96),
+                    0 0 70px rgba(255, 206, 239, 0.95);
+        transform: translateY(-2px) scale(1.03);
+      }
+      100% {
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.85),
+                    0 0 40px rgba(255, 185, 230, 0.6);
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        transform: scale(1.02);
+        visibility: hidden;
+      }
+    }
+
+    @keyframes floatGlow {
+      0% {
+        transform: translate3d(-10px, 0, 0) scale(1);
+      }
+      50% {
+        transform: translate3d(12px, -16px, 0) scale(1.08);
+      }
+      100% {
+        transform: translate3d(-6px, 12px, 0) scale(1);
+      }
+    }
+
+    @keyframes floatHeart {
+      0% {
+        transform: translate3d(0, 0, 0) rotate(45deg) scale(0.8);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.9;
+      }
+      50% {
+        transform: translate3d(-10px, -55vh, 0) rotate(45deg) scale(1);
+      }
+      100% {
+        transform: translate3d(10px, -120vh, 0) rotate(45deg) scale(1.3);
+        opacity: 0;
+      }
+    }
+
+    @keyframes heroTitle {
+      0% {
+        text-shadow: 0 0 18px rgba(255, 193, 232, 0.7);
+      }
+      50% {
+        text-shadow: 0 0 36px rgba(255, 211, 241, 1);
+      }
+      100% {
+        text-shadow: 0 0 18px rgba(255, 185, 229, 0.7);
+      }
+    }
+
+    @keyframes scrollDot {
+      0% {
+        transform: translateY(-7px);
+        opacity: 0.1;
+      }
+      50% {
+        transform: translateY(4px);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(10px);
+        opacity: 0;
+      }
+    }
+
+    @keyframes finalHearts {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.7;
+      }
+      50% {
+        transform: translateY(-4px) scale(1.16);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(0) scale(1.02);
+        opacity: 0.8;
+      }
+    }
+
+    /* Responsive */
+
+    @media (max-width: 900px) {
+      .page-wrapper {
+        padding-top: 4.2rem;
+      }
+
+      .site-header {
+        border-radius: 20px;
+        padding-inline: 1rem;
+      }
+
+      .photo-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .site-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .brand-text {
+        font-size: 0.85rem;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .love-letter-card,
+      .gallery-card,
+      .memories-card,
+      .wishes-card,
+      .final-card {
+        padding-inline: 1.3rem;
+      }
+
+      .photo-grid img {
+        height: 110px;
+      }
+
+      .video-card video,
+      .video-card iframe {
+        min-height: 160px;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .intro-content {
+        padding-inline: 1.4rem;
+      }
+
+      .hero-section {
+        padding-top: 1.6rem;
+      }
+
+      .photo-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .photo-grid img {
+        height: 105px;
+      }
+
+      .final-card {
+        padding-inline: 1.35rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Background music – replace src with your romantic song file -->
+  <audio id="bg-music" loop preload="auto">
+    <!-- Replace "music/romantic-song.mp3" with the path to your own audio file -->
+    <source src="music/romantic-song.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Intro / celebration screen -->
+  <div id="intro-screen" class="intro-screen">
+    <canvas id="confetti-canvas"></canvas>
+    <div class="intro-overlay"></div>
+    <div class="intro-content">
+      <div class="intro-text">
+        <p class="intro-subtitle">A Little Birthday Magic</p>
+        <h1>Happy Birthday, My Love</h1>
+        <p class="intro-line">Tonight, the whole universe is quietly celebrating you – your smile, your heart, your beautiful soul.</p>
+        <p class="intro-line">I made this just for you. Take a breath, feel my arms around you, and when you're ready…</p>
+      </div>
+      <button id="begin-btn" class="begin-btn">Tap to Begin ❤️</button>
+      <p class="tap-hint">Turn your volume on and tap when you're ready.</p>
+    </div>
+  </div>
+
+  <!-- Ambient background decor -->
+  <div class="background-decor">
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+    <div class="glow glow-3"></div>
+    <div class="floating-hearts">
+      <span style="--i:1;"></span>
+      <span style="--i:2;"></span>
+      <span style="--i:3;"></span>
+      <span style="--i:4;"></span>
+      <span style="--i:5;"></span>
+      <span style="--i:6;"></span>
+      <span style="--i:7;"></span>
+      <span style="--i:8;"></span>
+      <span style="--i:9;"></span>
+      <span style="--i:10;"></span>
+      <span style="--i:11;"></span>
+      <span style="--i:12;"></span>
+      <span style="--i:13;"></span>
+      <span style="--i:14;"></span>
+      <span style="--i:15;"></span>
+      <span style="--i:16;"></span>
+      <span style="--i:17;"></span>
+      <span style="--i:18;"></span>
+    </div>
+  </div>
+
+  <!-- Main page content -->
+  <div id="page-wrapper" class="page-wrapper">
+    <header class="site-header">
+      <div class="brand">
+        <div class="brand-mark">♥</div>
+        <div class="brand-text">For My Beautiful Girlfriend</div>
+      </div>
+      <nav class="nav-links">
+        <a href="#hero">Home</a>
+        <a href="#love-letter">Love Letter</a>
+        <a href="#photos">Photos</a>
+        <a href="#memories">Memories</a>
+        <a href="#wishes">Wishes</a>
+        <a href="#final-surprise">Final Surprise</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- Hero -->
+      <section id="hero" class="hero-section">
+        <div class="reveal-on-scroll in-view">
+          <h1 class="hero-main-title">Happy Birthday My Love 🎉💖</h1>
+          <p class="hero-tagline">
+            If I could bottle how I feel about you tonight, the world would finally understand what
+            <span>pure magic</span> feels like.
+          </p>
+          <div class="hero-meta">
+            From my heart to yours · A little universe made just for you
+          </div>
+          <a href="#love-letter" class="scroll-indicator">
+            <div class="scroll-indicator-icon">
+              <span></span>
+            </div>
+            <span>Scroll down for your love letter</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- Love Letter -->
+      <section id="love-letter" class="section">
+        <div class="section-heading reveal-on-scroll">
+          <div class="section-eyebrow">From Me To You</div>
+          <h2 class="section-title">A Love Letter for Your Birthday</h2>
+          <p class="section-subtitle">Take your time and read this slowly, like I’m whispering each word in your ear.</p>
+        </div>
+        <article class="love-letter-card reveal-on-scroll delay-1">
+          <h3 class="letter-intro">My love,</h3>
+          <div class="letter-body">
+            <p>
+              Another year of your life, another year of me being lucky enough to be part of it. I still can’t believe that
+              somehow, in this big, messy world, I get to call <span class="letter-highlight">you</span> my home.
+            </p>
+            <p>
+              You are my favorite notification, my softest place to land, and the most beautiful part of every single day.
+              Your laugh makes everything feel lighter, your hugs make the loudest days go silent, and your heart…
+              your heart is the gentlest thing I’ve ever known.
+            </p>
+            <p>
+              I love the tiny things you probably think I don’t notice – the way your eyes light up when you talk about what
+              you love, the way you care so deeply for the people around you, the way you keep going even on the days that
+              feel heavy. You are strong, you are kind, you are breathtakingly beautiful, and I am endlessly proud of you.
+            </p>
+            <p>
+              On your birthday, I just want you to remember this: <span class="letter-highlight">you are enough, more than enough</span>.
+              You are worthy of every good thing, every soft moment, every dream coming true. If I could, I’d hang the stars a
+              little lower tonight so you could reach them easier.
+            </p>
+            <p>
+              Thank you for choosing me, for trusting me with your heart, for letting me love you in all your shades of light
+              and shadow. I promise to keep choosing you, over and over again, in every version of tomorrow.
+            </p>
+            <p class="letter-signoff">
+              I love you more than words can say, more than this little website can ever show, and more than my shy heart
+              always manages to express.
+            </p>
+            <p class="letter-signature">Always, forever, and then a little more.</p>
+          </div>
+        </article>
+      </section>
+
+      <!-- Photos -->
+      <section id="photos" class="section">
+        <div class="section-heading reveal-on-scroll">
+          <div class="section-eyebrow">Your Smile, My Favorite View</div>
+          <h2 class="section-title">Our Little Gallery of You</h2>
+          <p class="section-subtitle">Every photo here is a moment where my heart quietly whispered, “How did I get this lucky?”</p>
+        </div>
+        <div class="gallery-card reveal-on-scroll delay-1">
+          <div class="slideshow" id="photo-slideshow">
+            <div class="slideshow-frames">
+              <!-- Replace src paths with your own photos -->
+              <div class="slide active">
+                <img src="photos/photo1.jpg" alt="Your beautiful smile">
+              </div>
+              <div class="slide">
+                <img src="photos/photo2.jpg" alt="Laughing together">
+              </div>
+              <div class="slide">
+                <img src="photos/photo3.jpg" alt="A soft, quiet moment">
+              </div>
+              <div class="slide">
+                <img src="photos/photo4.jpg" alt="You being effortlessly beautiful">
+              </div>
+            </div>
+            <div class="slideshow-overlay-gradient"></div>
+            <div class="slideshow-caption">
+              <span>📸</span>
+              <span>Every version of you is my favorite.</span>
+            </div>
+            <div class="slideshow-dots">
+              <button class="dot active" data-index="0" aria-label="Show photo 1"></button>
+              <button class="dot" data-index="1" aria-label="Show photo 2"></button>
+              <button class="dot" data-index="2" aria-label="Show photo 3"></button>
+              <button class="dot" data-index="3" aria-label="Show photo 4"></button>
+            </div>
+          </div>
+          <div class="photo-grid">
+            <!-- Replace these with more of her photos -->
+            <img src="photos/photo5.jpg" alt="Her candid smile">
+            <img src="photos/photo6.jpg" alt="A memory together">
+            <img src="photos/photo7.jpg" alt="Her glowing laugh">
+            <img src="photos/photo8.jpg" alt="Her peaceful look">
+          </div>
+        </div>
+      </section>
+
+      <!-- Memories -->
+      <section id="memories" class="section">
+        <div class="section-heading reveal-on-scroll">
+          <div class="section-eyebrow">Pieces of Us</div>
+          <h2 class="section-title">Memories I Keep Replaying</h2>
+          <p class="section-subtitle">Just a few of the thousand little moments that made me fall for you, over and over again.</p>
+        </div>
+        <div class="memories-card reveal-on-scroll delay-1">
+          <div class="memory-grid">
+            <article class="memory-card reveal-on-scroll delay-1">
+              <div class="memory-tag">Firsts</div>
+              <h3 class="memory-title">The first time I saw your smile</h3>
+              <p class="memory-text">
+                I remember thinking, “Oh no… I’m in trouble.” Because in that single moment, your smile felt like home, and
+                I knew my heart had found something it didn’t want to lose.
+              </p>
+              <div class="memory-quote-mark">“</div>
+            </article>
+
+            <article class="memory-card reveal-on-scroll delay-2">
+              <div class="memory-tag">Quiet Moments</div>
+              <h3 class="memory-title">Those late-night talks</h3>
+              <p class="memory-text">
+                The way we lie there, talking about nothing and everything, slowly drifting into sleep knowing that we’re safe
+                in each other’s worlds — those are my favorite nights.
+              </p>
+              <div class="memory-quote-mark">“</div>
+            </article>
+
+            <article class="memory-card reveal-on-scroll delay-3">
+              <div class="memory-tag">Laughter</div>
+              <h3 class="memory-title">When you laugh so hard you can’t breathe</h3>
+              <p class="memory-text">
+                The way you throw your head back, try to hide your face, and still end up being the cutest thing I’ve ever seen.
+                In those moments, everything else disappears.
+              </p>
+              <div class="memory-quote-mark">“</div>
+            </article>
+
+            <article class="memory-card reveal-on-scroll delay-1">
+              <div class="memory-tag">Comfort</div>
+              <h3 class="memory-title">Your hand in mine</h3>
+              <p class="memory-text">
+                Every time your fingers find mine, the world slows down. It’s like your hand silently tells me, “I’m here. We’re okay.”
+              </p>
+              <div class="memory-quote-mark">“</div>
+            </article>
+
+            <article class="memory-card reveal-on-scroll delay-2">
+              <div class="memory-tag">Little Things</div>
+              <h3 class="memory-title">Your sleepy “I love you”</h3>
+              <p class="memory-text">
+                That soft, half-asleep voice, the warmth of you next to me, your arms holding on even tighter — it’s the kind of
+                peace I never knew I needed.
+              </p>
+              <div class="memory-quote-mark">“</div>
+            </article>
+
+            <article class="memory-card reveal-on-scroll delay-3">
+              <div class="memory-tag">Always</div>
+              <h3 class="memory-title">Every ordinary day with you</h3>
+              <p class="memory-text">
+                Grocery runs, movie nights, staying in, doing nothing — with you, the most “normal” days become the ones I want
+                to live in forever.
+              </p>
+              <div class="memory-quote-mark">“</div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Birthday Wishes / Videos -->
+      <section id="wishes" class="section">
+        <div class="section-heading reveal-on-scroll">
+          <div class="section-eyebrow">From The People Who Love You</div>
+          <h2 class="section-title">Birthday Wishes Just For You</h2>
+          <p class="section-subtitle">Press play and let yourself be reminded of how loved, valued, and cherished you are.</p>
+        </div>
+        <div class="wishes-card reveal-on-scroll delay-1">
+          <p class="wishes-intro">
+            These are little messages from the people who adore you — each one is a reminder that your existence makes the world softer.
+          </p>
+          <div class="video-grid">
+            <!-- Replace src with your own video files or embed YouTube links via iframes -->
+            <div class="video-card reveal-on-scroll delay-1">
+              <div class="video-label">
+                <span>🎥</span>
+                <span>From your best friend</span>
+              </div>
+              <video src="videos/message1.mp4" controls preload="metadata" playsinline></video>
+            </div>
+
+            <div class="video-card reveal-on-scroll delay-2">
+              <div class="video-label">
+                <span>🎥</span>
+                <span>From your family</span>
+              </div>
+              <video src="videos/message2.mp4" controls preload="metadata" playsinline></video>
+            </div>
+
+            <div class="video-card reveal-on-scroll delay-3">
+              <div class="video-label">
+                <span>🎥</span>
+                <span>From your favorite partner (me)</span>
+              </div>
+              <video src="videos/message3.mp4" controls preload="metadata" playsinline></video>
+            </div>
+
+            <div class="video-card reveal-on-scroll delay-2">
+              <div class="video-label">
+                <span>🎥</span>
+                <span>Another special surprise</span>
+              </div>
+              <video src="videos/message4.mp4" controls preload="metadata" playsinline></video>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Final Surprise -->
+      <section id="final-surprise" class="section">
+        <div class="section-heading reveal-on-scroll">
+          <div class="section-eyebrow">From My Heart</div>
+          <h2 class="section-title">The Real Wish Behind It All</h2>
+          <p class="section-subtitle">Close your eyes for a second, breathe in, and let every word land softly on your heart.</p>
+        </div>
+        <div class="final-card reveal-on-scroll delay-1">
+          <div class="final-soft-glow"></div>
+          <h3 class="final-title">My Forever Birthday Wish for You</h3>
+          <p class="final-text">
+            I wish you a life where you never have to question how loved you are. A life where your dreams feel possible,
+            your heart always has a safe place to rest, and your soul is surrounded by people who see how rare and precious
+            you truly are.
+          </p>
+          <p class="final-text">
+            I wish for you to wake up every day knowing that somewhere in this world, there is someone — me — who is rooting
+            for you, thinking of you, proud of you, and hopelessly, endlessly in love with you.
+          </p>
+          <p class="final-text">
+            No matter what this year brings, I’ll be right by your side through the good days, the hard days, and all the
+            beautifully ordinary ones in between. You will never have to walk through any of it alone.
+          </p>
+          <p class="final-quote">
+            Happy Birthday ❤️ This website is just a small gift compared to how special you are to me.
+          </p>
+          <div class="final-hearts">
+            <span>♥</span>
+            <span>♥</span>
+            <span>♥</span>
+            <span>♥</span>
+            <span>♥</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      Made with so much love, just for you. ♡
+    </footer>
+  </div>
+
+  <!-- Confetti library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script>
+    (function () {
+      const introScreen = document.getElementById('intro-screen');
+      const beginBtn = document.getElementById('begin-btn');
+      const pageWrapper = document.getElementById('page-wrapper');
+      const bgMusic = document.getElementById('bg-music');
+      const confettiCanvas = document.getElementById('confetti-canvas');
+
+      let hasStarted = false;
+
+      // Show "Tap to Begin" after a short intro
+      window.addEventListener('load', function () {
+        setTimeout(function () {
+          introScreen.classList.add('show-button');
+        }, 2200);
+
+        // Start celebration confetti
+        if (window.confetti && confettiCanvas) {
+          const myConfetti = window.confetti.create(confettiCanvas, {
+            resize: true,
+            useWorker: true
+          });
+
+          function bigBurst() {
+            myConfetti({
+              particleCount: 160,
+              spread: 80,
+              origin: { y: 0.6 },
+              colors: ['#ff99cc', '#ffd28a', '#ffb6d9', '#b088ff', '#ffffff']
+            });
+          }
+
+          function sideBurst(x) {
+            myConfetti({
+              particleCount: 80,
+              angle: x < 0.5 ? 60 : 120,
+              spread: 55,
+              origin: { x: x, y: 0.8 },
+              colors: ['#ff99cc', '#ffd28a', '#ffb6d9', '#ffffff']
+            });
+          }
+
+          // Initial bursts
+          setTimeout(bigBurst, 400);
+          setTimeout(() => sideBurst(0.1), 900);
+          setTimeout(() => sideBurst(0.9), 1200);
+          setTimeout(bigBurst, 1700);
+
+          // Gentle falling confetti for a few seconds
+          setTimeout(function () {
+            const interval = setInterval(function () {
+              myConfetti({
+                particleCount: 40,
+                spread: 70,
+                origin: { y: 0.1 },
+                ticks: 200,
+                gravity: 0.9,
+                scalar: 0.9
+              });
+            }, 550);
+            setTimeout(() => clearInterval(interval), 4500);
+          }, 700);
+        }
+      });
+
+      // Start experience
+      if (beginBtn) {
+        beginBtn.addEventListener('click', function () {
+          if (hasStarted) return;
+          hasStarted = true;
+
+          // Start music on user interaction
+          if (bgMusic && typeof bgMusic.play === 'function') {
+            bgMusic.volume = 0.7;
+            bgMusic.play().catch(function () {
+              // Silent catch; autoplay may fail depending on browser
+            });
+          }
+
+          // Transition from intro to main content
+          introScreen.classList.add('fade-out');
+          setTimeout(function () {
+            introScreen.style.display = 'none';
+            pageWrapper.classList.add('visible');
+            const hero = document.getElementById('hero');
+            if (hero && hero.scrollIntoView) {
+              hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }, 850);
+        });
+      }
+
+      // Reveal-on-scroll animations
+      const revealEls = document.querySelectorAll('.reveal-on-scroll');
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in-view');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          threshold: 0.2
+        });
+        revealEls.forEach(function (el) {
+          if (!el.classList.contains('in-view')) {
+            observer.observe(el);
+          }
+        });
+      } else {
+        revealEls.forEach(function (el) {
+          el.classList.add('in-view');
+        });
+      }
+
+      // Simple slideshow
+      const slideshow = document.getElementById('photo-slideshow');
+      if (slideshow) {
+        const slides = slideshow.querySelectorAll('.slide');
+        const dots = slideshow.querySelectorAll('.slideshow-dots .dot');
+        let current = 0;
+        let slideshowInterval;
+
+        function showSlide(index) {
+          if (!slides.length) return;
+          current = (index + slides.length) % slides.length;
+          slides.forEach((slide, i) => {
+            slide.classList.toggle('active', i === current);
+          });
+          dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === current);
+          });
+        }
+
+        function startAutoSlide() {
+          if (slideshowInterval) clearInterval(slideshowInterval);
+          slideshowInterval = setInterval(function () {
+            showSlide(current + 1);
+          }, 4800);
+        }
+
+        dots.forEach(function (dot) {
+          dot.addEventListener('click', function () {
+            const index = parseInt(dot.getAttribute('data-index'), 10);
+            showSlide(index);
+            startAutoSlide();
+          });
+        });
+
+        showSlide(0);
+        startAutoSlide();
+      }
+    })();
+  </script>
+</body>
+</html>
